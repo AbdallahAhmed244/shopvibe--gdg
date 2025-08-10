@@ -1,22 +1,22 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function AccountCreationPage({ handleSignup, users }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  
+
   const handleSubmit = () => {
     if (users.find((u) => u.email === email)) {
       setError("Email already exists");
       return;
     }
     handleSignup(name, email, password);
-    navigate("/home");
+
+    alert("Account created successfully! Please login.");
   };
-  
+
   return (
     <div className="auth-container">
       <div className="auth-form">
