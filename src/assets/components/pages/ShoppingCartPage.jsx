@@ -1,6 +1,8 @@
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import MainNavigationBar from "../layout/MainNavigationBar";
 import SiteFooter from "../layout/SiteFooter";
+import Toast from "./Toast";
 import "../../styles/ShoppingCartPage.css";
 
 export default function ShoppingCartPage({
@@ -11,25 +13,38 @@ export default function ShoppingCartPage({
   removeFromCart,
   setSelectedCategory,
 }) {
-  const navigate = useNavigate();
+  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState(false);
+
+  
+  const showToastMessage = (message) => {
+    setToastMessage(message);
+    setShowToast(true);
+  };
+
+  
+  const handleUpdateQuantity = (cartId, newQuantity) => {
+    updateQuantity(cartId, newQuantity);
+    showToastMessage("add in cart is pass");
+  };
+
+  
+  const handleRemoveFromCart = (cartId) => {
+    removeFromCart(cartId);
+    showToastMessage("removed from cart");
+  };
 
   return (
     <div className="page-container">
-      <MainNavigationBar
-        currentUser={currentUser}
-        getTotalItems={getTotalItems}
-      />
+      <MainNavigationBar currentUser={currentUser} getTotalItems={getTotalItems} />
       <div className="cart-content">
         <h1>Shopping Cart</h1>
         {cart.length === 0 ? (
           <div className="empty-cart">
             <p>Your cart is empty</p>
-            <button
-              onClick={() => navigate("/home")}
-              className="continue-shopping-btn"
-            >
+            <Link to="/home" className="continue-shopping-btn">
               Continue Shopping
-            </button>
+            </Link>
           </div>
         ) : (
           <div className="cart-items">
@@ -47,9 +62,7 @@ export default function ShoppingCartPage({
                   <p className="cart-item-price">${item.price}</p>
                   <div className="quantity-controls">
                     <button
-                      onClick={() =>
-                        updateQuantity(item.cartId, item.quantity - 1)
-                      }
+                      onClick={() => handleUpdateQuantity(item.cartId, item.quantity - 1)}
                       className="quantity-btn"
                       disabled={item.quantity <= 1}
                     >
@@ -57,9 +70,7 @@ export default function ShoppingCartPage({
                     </button>
                     <span className="quantity-display">{item.quantity}</span>
                     <button
-                      onClick={() =>
-                        updateQuantity(item.cartId, item.quantity + 1)
-                      }
+                      onClick={() => handleUpdateQuantity(item.cartId, item.quantity + 1)}
                       className="quantity-btn"
                     >
                       +
@@ -69,10 +80,7 @@ export default function ShoppingCartPage({
                     Subtotal: ${(item.price * item.quantity).toFixed(2)}
                   </p>
                 </div>
-                <button
-                  onClick={() => removeFromCart(item.cartId)}
-                  className="remove-btn"
-                >
+                <button onClick={() => handleRemoveFromCart(item.cartId)} className="remove-btn">
                   Remove
                 </button>
               </div>
@@ -82,9 +90,7 @@ export default function ShoppingCartPage({
                 <p>Total Items: {getTotalItems()}</p>
                 <h2>
                   Total Amount: $
-                  {cart
-                    .reduce((sum, item) => sum + item.price * item.quantity, 0)
-                    .toFixed(2)}
+                  {cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}
                 </h2>
               </div>
             </div>
@@ -92,6 +98,9 @@ export default function ShoppingCartPage({
         )}
       </div>
       <SiteFooter setSelectedCategory={setSelectedCategory} />
+
+  
+      <Toast message={toastMessage} show={showToast} onClose={() => setShowToast(false)} />
     </div>
   );
 }
