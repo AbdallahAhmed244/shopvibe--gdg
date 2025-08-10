@@ -1,14 +1,14 @@
-import { useLocation } from "react-router-dom";
+
 import MainNavigationBar from "../layout/MainNavigationBar";
 import SiteFooter from "../layout/SiteFooter";
-
+import "../../styles/PrivacyPolicyDocumentPage.css"; 
 export default function PrivacyPolicyDocumentPage({ setSelectedCategory }) {
   return (
     <div className="page-container">
       <MainNavigationBar currentUser={null} getTotalItems={() => 0} />
       <div className="policy-content">
         <h1>Privacy Policy</h1>
-        <p>Last updated: June 15, 2025</p>
+        <p>Last updated: August 6, 2025 by abdallah ahmed</p>
         <section>
           <h2>1. Introduction</h2>
           <p>Welcome to ShopVibe! This Privacy Policy explains how we collect, use, and disclose information about you when you use our website and services.</p>
