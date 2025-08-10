@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+
 import MainNavigationBar from "../layout/MainNavigationBar";
 import SiteFooter from "../layout/SiteFooter";
 
