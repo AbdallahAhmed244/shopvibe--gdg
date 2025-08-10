@@ -1,4 +1,4 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Link,Navigate} from "react-router-dom";
 import ProtectedRoute from "./ui/AuthenticatedRouteGuard";
 import AuthRoute from "./utils/UnauthenticatedRouteGuard";
 import ProductCatalogPage from "./pages/ProductCatalogPage";
@@ -30,39 +30,35 @@ export default function ApplicationRouter() {
 
   const fetchProducts = async () => {
     setLoading(true);
-    try {
-      const response1 = await fetch("https://dummyjson.com/products?limit=50");
-      const data1 = await response1.json();
-      const response2 = await fetch(
-        "https://dummyjson.com/products/category/smartphones"
-      );
-      const data2 = await response2.json();
-      const response3 = await fetch(
-        "https://dummyjson.com/products/category/mobile-accessories"
-      );
-      const data3 = await response3.json();
-      const response4 = await fetch(
-        "https://dummyjson.com/products/category/laptops"
-      );
-      const data4 = await response4.json();
-      const response5 = await fetch(
-        "https://dummyjson.com/products/category/sports-accessories"
-      );
-      const data5 = await response5.json();
-      const allProducts = [
-        ...(data1.products || []),
-        ...(data2.products || []),
-        ...(data3.products || []),
-        ...(data4.products || []),
-        ...(data5.products || []),
-      ];
-      setProducts(allProducts);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    } finally {
-      setLoading(false);
-    }
+    const response1 = await fetch("https://dummyjson.com/products?limit=50");
+    const data1 = await response1.json();
+    const response2 = await fetch(
+      "  https://dummyjson.com/products/category/smartphones  "
+    );
+    const data2 = await response2.json();
+    const response3 = await fetch(
+      "https://dummyjson.com/products/category/mobile-accessories  "
+    );
+    const data3 = await response3.json();
+    const response4 = await fetch(
+      "https://dummyjson.com/products/category/laptops  "
+    );
+    const data4 = await response4.json();
+    const response5 = await fetch(
+      "https://dummyjson.com/products/category/sports-accessories  "
+    );
+    const data5 = await response5.json();
+    const allProducts = [
+      ...(data1.products || []),
+      ...(data2.products || []),
+      ...(data3.products || []),
+      ...(data4.products || []),
+      ...(data5.products || []),
+    ];
+    setProducts(allProducts);
+    setLoading(false);
   };
+  
   const getAvailableCategories = () => {
     const categoryCounts = {};
     products.forEach((product) => {
@@ -198,7 +194,6 @@ export default function ApplicationRouter() {
 
   return (
     <Routes>
-      {}
       <Route
         path="/login"
         element={
@@ -215,7 +210,6 @@ export default function ApplicationRouter() {
           </AuthRoute>
         }
       />
-      {}
       <Route
         path="/privacy-policy"
         element={
@@ -232,7 +226,6 @@ export default function ApplicationRouter() {
           />
         }
       />
-      {}
       <Route
         path="/home"
         element={
@@ -326,7 +319,6 @@ export default function ApplicationRouter() {
           </ProtectedRoute>
         }
       />
-      {}
       <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
